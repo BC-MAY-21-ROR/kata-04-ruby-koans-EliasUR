@@ -15,17 +15,31 @@
 # and
 #   about_triangle_project_2.rb
 #
+
 def triangle(base, left_side, right_side)
   # WRITE THIS CODE
-  if base == left_side && base == right_side
-    :equilateral
-  elsif base != left_side && base != right_side && left_side != right_side
-    :scalene
-  else
-    :isosceles
-  end
+  sides = [base, left_side, right_side].sort
+  wrong_triangle?(sides)
+  return :equilateral if equilateral?(sides)
+  return :scalene if scalene?(sides)
+
+  :isosceles
+end
+
+def equilateral?(sides)
+  sides[0] == sides[1] && sides[0] == sides[2]
+end
+
+def scalene?(sides)
+  sides[0] != sides[1] && sides[0] != sides[2] && sides[1] != sides[2]
 end
 
 # Error class used in part 2.  No need to change this code.
 class TriangleError < StandardError
+end
+
+def wrong_triangle?(sides)
+  sum = sides[0] + sides[1]
+  raise TriangleError.new, "Triangle sides can't be negative or zero." if sides[0] <= 0
+  raise TriangleError.new, "Triangles can't have one side greater than the sum of the otters two" if sum <= sides[2]
 end
