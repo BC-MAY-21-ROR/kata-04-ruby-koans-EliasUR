@@ -33,14 +33,11 @@ require File.expand_path("#{File.dirname(__FILE__)}/neo")
 
 def count_ones(ones)
   score = 0
-  resto = 0
   if ones >= 3
-    resto = ones - 3
     score = 1000
-  else
-    resto = ones
+    ones -= 3
   end
-  score += resto * 100
+  score + (ones * 100)
 end
 
 def count_fives(fives)
@@ -48,17 +45,20 @@ def count_fives(fives)
   fives * 50
 end
 
-def score(dice)
-  numbers = Hash.new(0)
+def count_score(numbers)
   score = 0
-  dice.each do |number|
-    numbers[number] += 1
-  end
   (1..6).each do |number|
     score += number * 100 if numbers[number] >= 3 && number != 1
   end
-  score += count_ones(numbers[1])
-  score += count_fives(numbers[5])
+  score
+end
+
+def score(dice)
+  numbers = Hash.new(0)
+  dice.each do |number|
+    numbers[number] += 1
+  end
+  count_score(numbers) + count_ones(numbers[1]) + count_fives(numbers[5])
 end
 
 class AboutScoringProject < Neo::Koan
