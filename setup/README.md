@@ -1,3 +1,14 @@
 # Setup
 
-Escribe aquí los pasos para ejecutar/probar tu proyecto y el nombre de los integrantes de tu equipo
+## Install Gems
+
+  ```bash
+  bundle install
+  ```
+
+## Run Project
+
+  ```bash
+  cd ./koans
+  rake
+  ```
